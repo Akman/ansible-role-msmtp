@@ -21,21 +21,21 @@
 - name: Ensure account specific msmtprc conf files are present
   template:
     src: "msmtprc.j2"
-    dest: "/etc/msmtp/msmtprc.{{ (item.1.name == 'default') | ternary('000', '%03d' | format(item.0)) }}.{{ item.1.name }}"
+    dest: "/etc/msmtp/msmtprc{{ (item.name == 'default') | ternary('.000.', '.') }}{{ item.name }}"
     mode: "0644"
     owner: "root"
     group: "root"
-  with_indexed_items:
+  with_items:
     - "{{ msmtp_accounts }}"
 
 - name: Ensure account specific aliases conf files are present
   template:
     src: "aliases.j2"
-    dest: "/etc/msmtp/aliases.{{ (item.1.name == 'default') | ternary('000', '%03d' | format(item.0)) }}.{{ item.1.name }}"
+    dest: "/etc/msmtp/aliases{{ (item.name == 'default') | ternary('.000.', '.') }}{{ item.name }}"
     mode: "0644"
     owner: "root"
     group: "root"
-  with_indexed_items:
+  with_items:
     - "{{ msmtp_accounts }}"
 
 - name: Assemble msmtp config file from fragmets
