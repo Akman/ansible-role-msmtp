@@ -38,6 +38,11 @@ Available variables are listed below, along with default values (see `defaults/m
 
 At least 'default' account MUST be present
 
+    Owner and group of msmtp config file
+    
+    msmtp_owner: "root"
+    msmtp_group: "root"
+
     msmtp_accounts: []
 
     - name: 'default'

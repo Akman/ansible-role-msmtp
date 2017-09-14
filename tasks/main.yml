@@ -14,17 +14,17 @@
   file:
     path: "/etc/msmtp"
     state: "directory"
-    mode: "0755"
-    owner: "root"
-    group: "root"
+    mode: "0750"
+    owner: "{{ msmtp_owner }}"
+    group: "{{ msmtp_group }}"
 
 - name: Ensure account specific msmtprc conf files are present
   template:
     src: "msmtprc.j2"
     dest: "/etc/msmtp/msmtprc{{ (item.name == 'default') | ternary('.000.', '.') }}{{ item.name }}"
-    mode: "0644"
-    owner: "root"
-    group: "root"
+    mode: "0640"
+    owner: "{{ msmtp_owner }}"
+    group: "{{ msmtp_group }}"
   with_items:
     - "{{ msmtp_accounts }}"
 
@@ -32,9 +32,9 @@
   template:
     src: "aliases.j2"
     dest: "/etc/msmtp/aliases{{ (item.name == 'default') | ternary('.000.', '.') }}{{ item.name }}"
-    mode: "0644"
-    owner: "root"
-    group: "root"
+    mode: "0640"
+    owner: "{{ msmtp_owner }}"
+    group: "{{ msmtp_group }}"
   with_items:
     - "{{ msmtp_accounts }}"
 
@@ -42,8 +42,8 @@
   assemble:
     src: /etc/msmtp
     dest: /etc/msmtprc
-    mode: "0644"
-    owner: "root"
-    group: "root"
+    mode: "0640"
+    owner: "{{ msmtp_owner }}"
+    group: "{{ msmtp_group }}"
     delimiter: ""
     regexp: "^msmtprc\\..+"

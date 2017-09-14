@@ -1,4 +1,7 @@
 ---
 # defaults/main.yml
 
+msmtp_owner: "root"
+msmtp_group: "root"
+
 msmtp_accounts: []
