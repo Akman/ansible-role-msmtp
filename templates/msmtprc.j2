@@ -1,17 +1,55 @@
-{% if item.1.name == "default" %}
+{% if item.1.name == 'default' %}
 # {{ ansible_managed }}
 
 defaults
-{% endif %}
 
+{% endif %}
 account {{ item.1.name }}
 
+{% set fields = [
+  'host',
+  'port',
+  'timeout',
+  'proxy_host',
+  'proxy_port',
+  'protocol',
+  'domain',
+  'auth',
+  'user',
+  'password',
+  'passwordeval',
+  'ntlmdomain',
+  'tls',
+  'tls_starttls',
+  'tls_trust_file',
+  'tls_crl_file',
+  'tls_fingerprint',
+  'tls_key_file',
+  'tls_cert_file',
+  'tls_certcheck',
+  'tls_min_dh_prime_bits',
+  'tls_priorities',
+  'from',
+  'auto_from',
+  'maildomain',
+  'dsn_notify',
+  'dsn_return',
+  'add_missing_from_header',
+  'add_missing_date_header',
+  'remove_bcc_headers'
+] %}
+{% for field in fields %}
+{% if item.1[field] is defined %}
+{{ field }} {{ item.1[field] }}
+{% endif %}
+{% endfor %}
+
 {% if item.1.log is defined %}
-{% if item.1.log == "syslog" %}
-syslog on
-{% elif item.1.log == "file" and item.1.logfile is defined %}
+{% if item.1.log == 'syslog' and item.1.syslog_facility is defined %}
+syslog {{ item.1.syslog_facility }}
+{% elif item.1.log == 'file' and item.1.logfile is defined %}
 logfile {{ item.1.logfile }}
 {% endif %}
 {% endif %}
 
-aliases /etc/msmtp/aliases.{{ (item.1.name == "default") | ternary('000', '{:03d}' | format(item.0 + 1)) }}.{{ item.1.name }}
+aliases /etc/msmtp/aliases.{{ (item.1.name == 'default') | ternary('000', '%03d' | format(item.0)) }}.{{ item.1.name }}

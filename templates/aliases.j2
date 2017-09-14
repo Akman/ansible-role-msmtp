@@ -2,8 +2,8 @@
 
 {% if item.1.aliases is defined %}
 {% for alias in item.1.aliases %}
-{% if alias.user is defined and alias.email is defined %}
-{{ alias.user }}: {{ alias.email }}
+{% if alias.user is defined and alias.emails is defined %}
+{{ alias.user }}: {{ alias.emails }}
 {% endif %}
 {% endfor %}
 {% endif %}

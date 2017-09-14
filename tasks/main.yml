@@ -21,7 +21,7 @@
 - name: Ensure account specific msmtprc conf files are present
   template:
     src: "msmtprc.j2"
-    dest: "/etc/msmtp/msmtprc.{{ (item.1.name == "default") | ternary('000', '{:03d}' | format(item.0 + 1)) }}.{{ item.1.name }}"
+    dest: "/etc/msmtp/msmtprc.{{ (item.1.name == 'default') | ternary('000', '%03d' | format(item.0)) }}.{{ item.1.name }}"
     mode: "0644"
     owner: "root"
     group: "root"
@@ -31,7 +31,7 @@
 - name: Ensure account specific aliases conf files are present
   template:
     src: "aliases.j2"
-    dest: "/etc/msmtp/aliases.{{ (item.1.name == "default") | ternary('000', '{:03d}' | format(item.0 + 1)) }}.{{ item.1.name }}"
+    dest: "/etc/msmtp/aliases.{{ (item.1.name == 'default') | ternary('000', '%03d' | format(item.0)) }}.{{ item.1.name }}"
     mode: "0644"
     owner: "root"
     group: "root"
@@ -47,6 +47,3 @@
     group: "root"
     delimiter: ""
     regexp: "^msmtprc\\..+"
-
-- name: Check msmtp installation
-  notify: check msmtp
