@@ -1,0 +1,52 @@
+---
+# tasks/main.yml
+
+- name: Include OS specific variables
+  include_vars: "{{ ansible_os_family }}.yml"
+
+- name: Ensure MSMTP related packages are installed
+  package:
+    name: "{{ item }}"
+    state: "present"
+  with_items: "{{ msmtp_packages }}"
+
+- name: Ensure msmtp conf dir presents
+  file:
+    path: "/etc/msmtp"
+    state: "directory"
+    mode: "0755"
+    owner: "root"
+    group: "root"
+
+- name: Ensure account specific msmtprc conf files are present
+  template:
+    src: "msmtprc.j2"
+    dest: "/etc/msmtp/msmtprc.{{ (item.1.name == "default") | ternary('000', '{:03d}' | format(item.0 + 1)) }}.{{ item.1.name }}"
+    mode: "0644"
+    owner: "root"
+    group: "root"
+  with_indexed_items:
+    - "{{ msmtp_accounts }}"
+
+- name: Ensure account specific aliases conf files are present
+  template:
+    src: "aliases.j2"
+    dest: "/etc/msmtp/aliases.{{ (item.1.name == "default") | ternary('000', '{:03d}' | format(item.0 + 1)) }}.{{ item.1.name }}"
+    mode: "0644"
+    owner: "root"
+    group: "root"
+  with_indexed_items:
+    - "{{ msmtp_accounts }}"
+
+- name: Assemble msmtp config file from fragmets
+  assemble:
+    src: /etc/msmtp
+    dest: /etc/msmtprc
+    mode: "0644"
+    owner: "root"
+    group: "root"
+    delimiter: ""
+    regexp: "^msmtprc\\..+"
+
+- name: Check msmtp installation
+  notify: check msmtp

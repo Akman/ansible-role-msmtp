@@ -1,0 +1,7 @@
+---
+# vars/Debian.yml
+
+msmtp_packages:
+  - msmtp
+  - msmtp-mta
+  - ca-certificates

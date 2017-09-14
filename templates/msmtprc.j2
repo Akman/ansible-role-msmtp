@@ -1,0 +1,17 @@
+{% if item.1.name == "default" %}
+# {{ ansible_managed }}
+
+defaults
+{% endif %}
+
+account {{ item.1.name }}
+
+{% if item.1.log is defined %}
+{% if item.1.log == "syslog" %}
+syslog on
+{% elif item.1.log == "file" and item.1.logfile is defined %}
+logfile {{ item.1.logfile }}
+{% endif %}
+{% endif %}
+
+aliases /etc/msmtp/aliases.{{ (item.1.name == "default") | ternary('000', '{:03d}' | format(item.0 + 1)) }}.{{ item.1.name }}

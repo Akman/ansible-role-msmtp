@@ -1,0 +1,24 @@
+---
+# meta/main.yml
+
+dependencies: []
+
+galaxy_info:
+  author: Akman
+  description: MSMTP installation and configuration for Linux.
+  license: "license (BSD, MIT)"
+  min_ansible_version: 2.2
+  platforms:
+    - name: Ubuntu
+      versions:
+        - precise
+        - raring
+        - saucy
+        - trusty
+        - xenial
+  galaxy_tags:
+    - server
+    - mail
+    - smtp
+
+allow_duplicates: yes
