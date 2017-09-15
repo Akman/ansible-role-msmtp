@@ -15,8 +15,8 @@
     path: "/etc/msmtp"
     state: "directory"
     mode: "{{ msmtp_rcdir_mode }}"
-    owner: "{{ msmtp_rcfile_owner }}"
-    group: "{{ msmtp_rcfile_group }}"
+    owner: "{{ msmtp_rcdir_owner }}"
+    group: "{{ msmtp_rcdir_group }}"
 
 - name: Ensure account specific msmtprc conf files are present
   template:
