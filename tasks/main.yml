@@ -45,7 +45,7 @@
     mode: "{{ msmtp_logfile_mode }}"
     owner: "{{ msmtp_logfile_owner }}"
     group: "{{ msmtp_logfile_group }}"
-  when: "{{ item.log == 'file' and item.logfile is defined }}"
+  when: item.log == 'file' and item.logfile is defined
   with_items:
     - "{{ msmtp_accounts }}"
 
