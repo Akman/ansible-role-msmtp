@@ -40,9 +40,18 @@ At least 'default' account MUST be present
 
     Owner and group of msmtp config file
     
-    msmtp_owner: "root"
-    msmtp_group: "root"
-
+    msmtp_rcdir_owner: "root"
+    msmtp_rcdir_group: "www-data"
+    msmtp_rcdir_mode: "750"
+    
+    msmtp_rcfile_owner: "root"
+    msmtp_rcfile_group: "www-data"
+    msmtp_rcfile_mode: "640"
+    
+    msmtp_logfile_owner: "root"
+    msmtp_logfile_group: "www-data"
+    msmtp_logfile_mode: "660"
+    
     msmtp_accounts: []
 
     - name: 'default'
@@ -301,6 +310,18 @@ None.
 
 *Inside vars/main.yml*:
 
+    msmtp_rcdir_owner: "root"
+    msmtp_rcdir_group: "www-data"
+    msmtp_rcdir_mode: "750"
+    
+    msmtp_rcfile_owner: "root"
+    msmtp_rcfile_group: "www-data"
+    msmtp_rcfile_mode: "640"
+    
+    msmtp_logfile_owner: "root"
+    msmtp_logfile_group: "www-data"
+    msmtp_logfile_mode: "660"
+
     msmtp_accounts:
       - name: 'default'
         host: 'smtp.yandex.ru'
@@ -312,6 +333,7 @@ None.
         tls: 'on'
         tls_starttls: 'off'
         tls_trust_file: '/etc/ssl/certs/ca-certificates.crt'
+        tls_certcheck: 'on'
         from: 'noreply@yourdomain.tld'
         log: 'syslog'
         syslog_facility: 'LOG_MAIL'

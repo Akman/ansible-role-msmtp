@@ -14,17 +14,17 @@
   file:
     path: "/etc/msmtp"
     state: "directory"
-    mode: "0750"
-    owner: "{{ msmtp_owner }}"
-    group: "{{ msmtp_group }}"
+    mode: "{{ msmtp_rcdir_mode }}"
+    owner: "{{ msmtp_rcfile_owner }}"
+    group: "{{ msmtp_rcfile_group }}"
 
 - name: Ensure account specific msmtprc conf files are present
   template:
     src: "msmtprc.j2"
     dest: "/etc/msmtp/msmtprc{{ (item.name == 'default') | ternary('.000.', '.') }}{{ item.name }}"
-    mode: "0640"
-    owner: "{{ msmtp_owner }}"
-    group: "{{ msmtp_group }}"
+    mode: "{{ msmtp_rcfile_mode }}"
+    owner: "{{ msmtp_rcfile_owner }}"
+    group: "{{ msmtp_rcfile_group }}"
   with_items:
     - "{{ msmtp_accounts }}"
 
@@ -32,9 +32,20 @@
   template:
     src: "aliases.j2"
     dest: "/etc/msmtp/aliases{{ (item.name == 'default') | ternary('.000.', '.') }}{{ item.name }}"
-    mode: "0640"
-    owner: "{{ msmtp_owner }}"
-    group: "{{ msmtp_group }}"
+    mode: "{{ msmtp_rcfile_mode }}"
+    owner: "{{ msmtp_rcfile_owner }}"
+    group: "{{ msmtp_rcfile_group }}"
+  with_items:
+    - "{{ msmtp_accounts }}"
+
+- name: Ensure account specific log files are exist and have valid permissions
+  file:
+    state: "touch"
+    dest: "{{ item.logfile }}"
+    mode: "{{ msmtp_logfile_mode }}"
+    owner: "{{ msmtp_logfile_owner }}"
+    group: "{{ msmtp_logfile_group }}"
+  when: {{ item.log == 'file' and item.logfile is defined }}
   with_items:
     - "{{ msmtp_accounts }}"
 
@@ -42,8 +53,8 @@
   assemble:
     src: /etc/msmtp
     dest: /etc/msmtprc
-    mode: "0640"
-    owner: "{{ msmtp_owner }}"
-    group: "{{ msmtp_group }}"
+    mode: "{{ msmtp_rcfile_mode }}"
+    owner: "{{ msmtp_rcfile_owner }}"
+    group: "{{ msmtp_rcfile_group }}"
     delimiter: ""
     regexp: "^msmtprc\\..+"
