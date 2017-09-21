@@ -1,6 +1,8 @@
 ---
 # defaults/main.yml
 
+msmtp_config_only: false
+
 msmtp_rcdir_owner: "root"
 msmtp_rcdir_group: "www-data"
 msmtp_rcdir_mode: "750"

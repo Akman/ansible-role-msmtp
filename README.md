@@ -36,6 +36,10 @@ None.
 
 Available variables are listed below, along with default values (see `defaults/main.yml`):
 
+    msmtp_config_only: false
+    
+    If true configuration changes apply only
+
 At least 'default' account MUST be present
 
     Owner and group of msmtp config file

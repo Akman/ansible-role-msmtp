@@ -4,11 +4,16 @@
 - name: Include OS specific variables
   include_vars: "{{ ansible_os_family }}.yml"
 
+- name: Update apt cache
+  apt: update_cache=yes cache_valid_time=3600
+  when: not msmtp_config_only
+  
 - name: Ensure MSMTP related packages are installed
   package:
     name: "{{ item }}"
     state: "present"
   with_items: "{{ msmtp_packages }}"
+  when: not msmtp_config_only
 
 - name: Ensure msmtp conf dir presents
   file:
