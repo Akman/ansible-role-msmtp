@@ -44,8 +44,9 @@
     - "{{ msmtp_accounts }}"
 
 - name: Ensure account specific log files are exist and have valid permissions
-  file:
-    state: "touch"
+  copy:
+    content: ""
+    force: "no"
     dest: "{{ item.logfile }}"
     mode: "{{ msmtp_logfile_mode }}"
     owner: "{{ msmtp_logfile_owner }}"
