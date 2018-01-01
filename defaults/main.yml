@@ -15,4 +15,6 @@ msmtp_logfile_owner: "root"
 msmtp_logfile_group: "www-data"
 msmtp_logfile_mode: "660"
 
+msmtp_no_log: true
+
 msmtp_accounts: []

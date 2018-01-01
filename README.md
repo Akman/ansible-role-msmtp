@@ -40,6 +40,10 @@ Available variables are listed below, along with default values (see `defaults/m
     
     If true configuration changes apply only
 
+    msmtp_no_log: true
+    
+    Hide sensitive information from others who would otherwise like to be able to see the output
+    
 At least 'default' account MUST be present
 
     Owner and group of msmtp config file
@@ -326,6 +330,8 @@ None.
     msmtp_logfile_group: "www-data"
     msmtp_logfile_mode: "660"
 
+    msmtp_no_log: false
+    
     msmtp_accounts:
       - name: 'default'
         host: 'smtp.yandex.ru'
