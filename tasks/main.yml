@@ -32,6 +32,7 @@
     group: "{{ msmtp_rcfile_group }}"
   with_items:
     - "{{ msmtp_accounts }}"
+  no_log: true
 
 - name: Ensure account specific aliases conf files are present
   template:
@@ -42,6 +43,7 @@
     group: "{{ msmtp_rcfile_group }}"
   with_items:
     - "{{ msmtp_accounts }}"
+  no_log: true
 
 - name: Ensure account specific log files are exist and have valid permissions
   copy:
@@ -54,6 +56,7 @@
   when: item.log == 'file' and item.logfile is defined
   with_items:
     - "{{ msmtp_accounts }}"
+  no_log: true
 
 - name: Assemble msmtp config file from fragmets
   assemble:
