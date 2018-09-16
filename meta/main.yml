@@ -4,6 +4,7 @@
 dependencies: []
 
 galaxy_info:
+  role_name: msmtp
   author: Akman
   description: MSMTP installation and configuration for Linux.
   license: "license (BSD, MIT)"
